@@ -1,0 +1,63 @@
+<!-- add_pond.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Pond</title>
+</head>
+<body>
+  <h2>Add Pond</h2>
+  <form id="pondForm">
+    <label>Name:</label><br />
+    <input type="text" id="name" required><br />
+
+    <label>LatLong (e.g. (20.1234, 85.1234)):</label><br />
+    <input type="text" id="latlong" required><br />
+
+    <label>Location (WKT e.g. POINT(85.1234 20.1234)):</label><br />
+    <input type="text" id="location" required><br />
+
+    <label>Area:</label><br />
+    <input type="text" id="area"><br />
+
+    <label>Address:</label><br />
+    <input type="text" id="address" required><br />
+
+    <label>User (Mobile Number):</label><br />
+    <input type="number" id="user" required><br /><br />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    document.getElementById('pondForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const data = {
+        name: document.getElementById('name').value,
+        latlong: document.getElementById('latlong').value,
+        location: document.getElementById('location').value,
+        area: document.getElementById('area').value,
+        address: document.getElementById('address').value,
+        user: document.getElementById('user').value
+      };
+
+      fetch('http://192.168.31.104:8000/add_pond/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        document.getElementById('response').innerText = JSON.stringify(result, null, 2);
+      })
+      .catch(error => {
+        document.getElementById('response').innerText = 'Error: ' + error;
+      });
+    });
+  </script>
+</body>
+</html>
