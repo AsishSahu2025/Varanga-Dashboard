@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_9z@p5nbgtue$iflb98tcz=-a60q4pxwcbgub6dcoe7)lh6@kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['172.188.217.108']
 
 
 # Application definition
@@ -80,6 +80,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'varanga_dashboard.wsgi.application'
+
 
 
 # Database
@@ -170,3 +171,8 @@ EMAIL_HOST_PASSWORD = 'pgvw cgtd hkbh chak'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://varangabg.bc-pl.com'
+]

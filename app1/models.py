@@ -5,9 +5,10 @@ from django.contrib.gis.db import models as geomodels
 
 # Create your models here.
 
-class MyUser(models.Model):                                       
+class MyUser(models.Model):   
+    id=models.AutoField(primary_key=True)                                    
     name=models.CharField(max_length=30)
-    Mob=models.BigIntegerField(primary_key=True,unique=True)
+    Mob=models.BigIntegerField(unique=True)
     Email=models.EmailField()
     password = models.CharField(max_length=50, blank=True, null=True)
     address=models.CharField(max_length=100, blank=True, null=True)

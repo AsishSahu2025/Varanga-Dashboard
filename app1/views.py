@@ -43,16 +43,82 @@ class SignupView(APIView):
 
 
 
+# class SigninView(APIView):
+#     def post(self, request):
+#         data = request.data
+#         identifier = data.get('identifier')  # email or mobile number
+#         password = data.get('password')
+
+#         if not all([identifier, password]):
+#             return Response({"error": "Email/Mob and password required"}, status=status.HTTP_400_BAD_REQUEST)
+
+#         try:
+#             if identifier.isdigit():
+#                 user = MyUser.objects.get(Mob=int(identifier))
+#             else:
+#                 user = MyUser.objects.get(Email=identifier)
+
+#             if user.password == password:
+#                 refresh = RefreshToken.for_user(user)
+#                 return Response({
+#                     'refresh': str(refresh),
+#                     'access': str(refresh.access_token),
+#                     'user': {
+#                         'name': user.name,
+#                         'Mob': user.Mob,
+#                         'Email': user.Email,
+#                         'address': user.address,
+#                     }
+#                 })
+#             else:
+#                 return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         except MyUser.DoesNotExist:
+#             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+# class SigninView(APIView):
+#     def post(self, request):
+#         data = request.data
+#         identifier = data.get('identifier')  # email or mobile number
+#         password = data.get('password')
+
+#         if not all([identifier, password]):
+#             return Response({"error": "Email/Mob and password required"}, status=status.HTTP_400_BAD_REQUEST)
+
+#         try:
+#             if identifier.isdigit():
+#                 user = MyUser.objects.get(Mob=int(identifier))
+#             else:
+#                 user = MyUser.objects.get(Email=identifier)
+
+#             if user.password == password:
+#                 refresh = RefreshToken.for_user(user)
+#                 return Response({
+#                     'refresh': str(refresh),
+#                     'access': str(refresh.access_token),
+#                     'name': user.name,
+#                     'Mob': user.Mob,
+#                     'Email': user.Email,
+#                     'address': user.address,
+#                     'id': user.id
+#                 })
+#             else:
+#                 return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+
+#         except MyUser.DoesNotExist:
+#             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
 class SigninView(APIView):
     def post(self, request):
         data = request.data
-        identifier = data.get('identifier')  # email or mobile number
+        identifier = data.get('identifier')  # Email or mobile number
         password = data.get('password')
 
         if not all([identifier, password]):
             return Response({"error": "Email/Mob and password required"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
+            # Identify user by mobile or email
             if identifier.isdigit():
                 user = MyUser.objects.get(Mob=int(identifier))
             else:
@@ -60,22 +126,27 @@ class SigninView(APIView):
 
             if user.password == password:
                 refresh = RefreshToken.for_user(user)
+
+                # Manual serialization of the user object
+                user_data = {
+                    'id': user.id,
+                    'name': user.name,
+                    'Mob': user.Mob,
+                    'Email': user.Email,
+                    'address': user.address,
+                }
+
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
-                    'user': {
-                        'name': user.name,
-                        'Mob': user.Mob,
-                        'Email': user.Email,
-                        'address': user.address,
-                    }
+                    **user_data
                 })
+
             else:
                 return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
 
         except MyUser.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
 
 
 from django.views.decorators.csrf import csrf_exempt
@@ -157,24 +228,47 @@ def remote_sensing_data():
             geometry = ee.Geometry.Point([longitude, latitude])
             print("Geometry:", geometry.getInfo())
 
-            # # Define a broader time range for image selection
-            end_date = datetime.now()
+            # # # Define a broader time range for image selection
+            # end_date = datetime.now()
 
-            # # Set start date to 1 month back
-            start_date = end_date - timedelta(days=30)
+            # # # Set start date to 1 month back
+            # start_date = end_date - timedelta(days=30)
+
+            # # # Format the dates as strings
+            # start_date_str = start_date.strftime('%Y-%m-%d')
+            # end_date_str = end_date.strftime('%Y-%m-%d')
+            # # Define a specific past date for your analysis
+            # # specific_date = datetime(2025, 3, 30)  # Example: March 15, 2024
+            
+            # # Set start date to 1 month before the specific date
+            # # start_date = specific_date - timedelta(days=30)
 
             # # Format the dates as strings
-            start_date_str = start_date.strftime('%Y-%m-%d')
-            end_date_str = end_date.strftime('%Y-%m-%d')
+            # # start_date_str = start_date.strftime('%Y-%m-%d')
+            # # end_date_str = specific_date.strftime('%Y-%m-%d')
+
+            # print(f"Fetching data from {start_date_str} to {end_date_str}")
+            # # # Define a broader time range for image selection
+
+
+
+            # end_date = datetime.now()
+
+            # # Set start date to 1 month back
+            # start_date = end_date - timedelta(days=30)
+
+            # # Format the dates as strings
+            # start_date_str = start_date.strftime('%Y-%m-%d')
+            # end_date_str = end_date.strftime('%Y-%m-%d')
             # Define a specific past date for your analysis
-            # specific_date = datetime(2025, 3, 30)  # Example: March 15, 2024
+            specific_date = datetime(2025, 5, 5)  # Example: March 15, 2024
             
             # Set start date to 1 month before the specific date
-            # start_date = specific_date - timedelta(days=30)
+            start_date = specific_date - timedelta(days=30)
 
             # Format the dates as strings
-            # start_date_str = start_date.strftime('%Y-%m-%d')
-            # end_date_str = specific_date.strftime('%Y-%m-%d')
+            start_date_str = start_date.strftime('%Y-%m-%d')
+            end_date_str = specific_date.strftime('%Y-%m-%d')
 
             print(f"Fetching data from {start_date_str} to {end_date_str}")
 
@@ -182,7 +276,7 @@ def remote_sensing_data():
             image_collection = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") \
                 .filterBounds(geometry) \
                 .filter(ee.Filter.lte('CLOUDY_PIXEL_PERCENTAGE', 40)) \
-                .filterDate(start_date, end_date)
+                .filterDate(start_date, specific_date)
 
             # Get the count of available images
             image_count = image_collection.size().getInfo()
@@ -279,7 +373,7 @@ def remote_sensing_data():
                 AQUATIC_MACROPYTES=data.get('AQUATIC_MACROPYTES'),
                 Phycocyanin=data.get('Phycocyanin'),
                 Chl_a=data.get('Chl-a'),  # Storing the Chlorophyll-a data
-                # created_at=specific_date
+                created_at=specific_date
             )
             user_email = pond.user.Email
             email_subject = 'Remote Sensing Data Saved....'
@@ -344,8 +438,67 @@ from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from app1.models import Parameter
 
+# @api_view(['POST'])
+# def graph(request, id):
+#     try:
+#         jsondata = JSONParser().parse(request)
+#         month = jsondata.get('month')
+
+#         if not month:
+#             return JsonResponse({'message': 'Month is required'}, status=400)
+
+#         temp = Parameter.objects.filter(
+#             pond=id,
+#             created_at__month=month
+#         ).order_by('-created_at')[:5]
+
+#         if temp.exists():
+#             ph_values = [param.pH for param in temp]
+#             DO_values = [param.dissolved_oxygen for param in temp]
+#             ndvi_values = [param.NDVI for param in temp]
+#             ndti_values = [param.NDTI for param in temp]
+#             gci_values = [param.GCI for param in temp]
+#             ndci_values = [param.NDCI for param in temp]
+#             ndwi_values = [param.NDWI for param in temp]
+#             TSS_values = [param.TSS for param in temp]
+#             cdom_values = [param.CDOM for param in temp]
+#             AQUATIC_MACROPYTES_values = [param.AQUATIC_MACROPYTES for param in temp]
+#             Chl_a_values = [param.Chl_a for param in temp]
+#             Phycocyanin_values = [param.Phycocyanin for param in temp]
+
+#             weeks = [f"week {(i.created_at.day - 1) // 7 + 1}" for i in temp]
+#             weeks.reverse()
+
+#             response = {
+#                 'ph': ph_values,
+#                 'dissolved_oxygen': DO_values,
+#                 'NDVI': ndvi_values,
+#                 'NDTI': ndti_values,
+#                 'GCI': gci_values,
+#                 'NDCI': ndci_values,
+#                 'NDWI': ndwi_values,
+#                 'TSS': TSS_values,
+#                 'CDOM': cdom_values,
+#                 'AQUATIC_MACROPYTES': AQUATIC_MACROPYTES_values,
+#                 'Chl_a': Chl_a_values,
+#                 'Phycocyanin': Phycocyanin_values,
+#                 'week': weeks
+#             }
+#             return JsonResponse(response, safe=False)
+#         else:
+#             return JsonResponse({'message': 'No data found for the given month and pond'}, status=404)
+
+#     except Exception as e:
+#         return JsonResponse({'message': 'An error occurred', 'error': str(e)}, status=500)
+
+
+from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
+from .models import Parameter  # Adjust import as needed
+
 @api_view(['POST'])
-def graph(request, id):
+def graph(request):
     try:
         jsondata = JSONParser().parse(request)
         month = jsondata.get('month')
@@ -353,46 +506,32 @@ def graph(request, id):
         if not month:
             return JsonResponse({'message': 'Month is required'}, status=400)
 
+        # Filter by month only (across all ponds or apply additional filters if needed)
         temp = Parameter.objects.filter(
-            pond=id,
             created_at__month=month
         ).order_by('-created_at')[:5]
 
-        if temp.exists():
-            ph_values = [param.pH for param in temp]
-            DO_values = [param.dissolved_oxygen for param in temp]
-            ndvi_values = [param.NDVI for param in temp]
-            ndti_values = [param.NDTI for param in temp]
-            gci_values = [param.GCI for param in temp]
-            ndci_values = [param.NDCI for param in temp]
-            ndwi_values = [param.NDWI for param in temp]
-            TSS_values = [param.TSS for param in temp]
-            cdom_values = [param.CDOM for param in temp]
-            AQUATIC_MACROPYTES_values = [param.AQUATIC_MACROPYTES for param in temp]
-            Chl_a_values = [param.Chl_a for param in temp]
-            Phycocyanin_values = [param.Phycocyanin for param in temp]
+        if not temp.exists():
+            return JsonResponse({'message': 'No data found for the given month'}, status=404)
 
-            weeks = [f"week {(i.created_at.day - 1) // 7 + 1}" for i in temp]
-            weeks.reverse()
+        response = {
+            'ph': [param.pH for param in temp],
+            'dissolved_oxygen': [param.dissolved_oxygen for param in temp],
+            'NDVI': [param.NDVI for param in temp],
+            'NDTI': [param.NDTI for param in temp],
+            'GCI': [param.GCI for param in temp],
+            'NDCI': [param.NDCI for param in temp],
+            'NDWI': [param.NDWI for param in temp],
+            'TSS': [param.TSS for param in temp],
+            'CDOM': [param.CDOM for param in temp],
+            'AQUATIC_MACROPYTES': [param.AQUATIC_MACROPYTES for param in temp],
+            'Chl_a': [param.Chl_a for param in temp],
+            'Phycocyanin': [param.Phycocyanin for param in temp],
+            'week': [f"week {(p.created_at.day - 1) // 7 + 1}" for p in temp][::-1]  # Reverse for chronological order
+        }
 
-            response = {
-                'ph': ph_values,
-                'dissolved_oxygen': DO_values,
-                'NDVI': ndvi_values,
-                'NDTI': ndti_values,
-                'GCI': gci_values,
-                'NDCI': ndci_values,
-                'NDWI': ndwi_values,
-                'TSS': TSS_values,
-                'CDOM': cdom_values,
-                'AQUATIC_MACROPYTES': AQUATIC_MACROPYTES_values,
-                'Chl_a': Chl_a_values,
-                'Phycocyanin': Phycocyanin_values,
-                'week': weeks
-            }
-            return JsonResponse(response, safe=False)
-        else:
-            return JsonResponse({'message': 'No data found for the given month and pond'}, status=404)
+        return JsonResponse(response, safe=False)
 
     except Exception as e:
         return JsonResponse({'message': 'An error occurred', 'error': str(e)}, status=500)
+

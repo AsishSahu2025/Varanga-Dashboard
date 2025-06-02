@@ -6,7 +6,7 @@ from .models import *
 
 @admin.register(MyUser)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('name', 'Mob', 'Email', 'address','password')
+    list_display = ('id','name', 'Mob', 'Email', 'address','password')
     search_fields = ('name', 'Mob', 'Email')
     list_filter = ('Email',)
 

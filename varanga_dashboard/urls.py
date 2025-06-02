@@ -24,7 +24,7 @@ urlpatterns = [
     path('signin/', SigninView.as_view(), name='signin'),
     path('add_pond/', add_pond, name='add_pond'),
     # path('parameters/', ParameterListView.as_view(), name='ParameterListView'),
-    path('monthby/<int:id>/', graph, name='monthby'),
+    path('monthby/', graph, name='monthby'),
     path('contact_info/<int:mob>/', contact_info, name='contact_info'),
 
 ]
