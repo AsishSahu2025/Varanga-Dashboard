@@ -41,73 +41,6 @@ class SignupView(APIView):
         )
         return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
 
-
-
-# class SigninView(APIView):
-#     def post(self, request):
-#         data = request.data
-#         identifier = data.get('identifier')  # email or mobile number
-#         password = data.get('password')
-
-#         if not all([identifier, password]):
-#             return Response({"error": "Email/Mob and password required"}, status=status.HTTP_400_BAD_REQUEST)
-
-#         try:
-#             if identifier.isdigit():
-#                 user = MyUser.objects.get(Mob=int(identifier))
-#             else:
-#                 user = MyUser.objects.get(Email=identifier)
-
-#             if user.password == password:
-#                 refresh = RefreshToken.for_user(user)
-#                 return Response({
-#                     'refresh': str(refresh),
-#                     'access': str(refresh.access_token),
-#                     'user': {
-#                         'name': user.name,
-#                         'Mob': user.Mob,
-#                         'Email': user.Email,
-#                         'address': user.address,
-#                     }
-#                 })
-#             else:
-#                 return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#         except MyUser.DoesNotExist:
-#             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
-# class SigninView(APIView):
-#     def post(self, request):
-#         data = request.data
-#         identifier = data.get('identifier')  # email or mobile number
-#         password = data.get('password')
-
-#         if not all([identifier, password]):
-#             return Response({"error": "Email/Mob and password required"}, status=status.HTTP_400_BAD_REQUEST)
-
-#         try:
-#             if identifier.isdigit():
-#                 user = MyUser.objects.get(Mob=int(identifier))
-#             else:
-#                 user = MyUser.objects.get(Email=identifier)
-
-#             if user.password == password:
-#                 refresh = RefreshToken.for_user(user)
-#                 return Response({
-#                     'refresh': str(refresh),
-#                     'access': str(refresh.access_token),
-#                     'name': user.name,
-#                     'Mob': user.Mob,
-#                     'Email': user.Email,
-#                     'address': user.address,
-#                     'id': user.id
-#                 })
-#             else:
-#                 return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
-
-#         except MyUser.DoesNotExist:
-#             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
 class SigninView(APIView):
     def post(self, request):
         data = request.data
@@ -147,6 +80,41 @@ class SigninView(APIView):
 
         except MyUser.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
+ # Adjust if needed
+
+@api_view(['POST'])
+def update_user_password(request):
+    data = JSONParser().parse(request)
+    identifier = data.get('identifier')
+    new_password = data.get('new_password')
+
+    if not identifier or not new_password:
+        return JsonResponse({'message': 'email_or_mobile and new_password are required'}, status=400)
+
+    try:
+        if identifier.isdigit():
+            user = MyUser.objects.filter(Mob=int(identifier)).first()
+        else:
+            user = MyUser.objects.filter(Email=identifier).first()
+
+        if not user:
+            return JsonResponse({'message': 'User not found'}, status=404)
+
+        user.password = new_password
+        user.save()
+
+        return JsonResponse({'message': 'Password updated successfully'}, status=200)
+    
+    except Exception as e:
+        return JsonResponse({'message': 'Error updating password', 'error': str(e)}, status=500)
+
+
 
 
 from django.views.decorators.csrf import csrf_exempt

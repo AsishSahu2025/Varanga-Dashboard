@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/', SignupView.as_view(), name='signup'),
     path('signin/', SigninView.as_view(), name='signin'),
+    path('forgotpassword/', update_user_password),
     path('add_pond/', add_pond, name='add_pond'),
     # path('parameters/', ParameterListView.as_view(), name='ParameterListView'),
     path('monthby/', graph, name='monthby'),
