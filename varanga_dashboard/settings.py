@@ -99,8 +99,8 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'varangadb',
         'USER': 'Vertoxlabs',
-        'PASSWORD': 'Vtx@2025',
-        'HOST': 'bcpostgressqlserver.postgres.database.azure.com',
+        'PASSWORD': 'Vtx@mru@#5951#new',
+        'HOST': 'bcpostgressqlserver12.postgres.database.azure.com',
         'PORT': '5432',
         'OPTIONS': {
             'sslmode': 'require',
@@ -157,20 +157,6 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 
-
-
-# settings.py
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-# settings.py example using Gmail
-EMAIL_BACKEND= "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'care.bariflolabs@gmail.com ' 
-EMAIL_HOST_PASSWORD = 'pgvw cgtd hkbh chak' 
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
 
 
 CSRF_TRUSTED_ORIGINS = [

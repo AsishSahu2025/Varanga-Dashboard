@@ -181,7 +181,7 @@ from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/earthengine.readonly']
 
 credentials = service_account.Credentials.from_service_account_file(
-    'ee-tapaskumarsahoo9090-6245e11643e0.json', scopes=SCOPES)  
+    'earth-engine-cloud-471609-d2c7ef4caa59.json', scopes=SCOPES)  
 ee.Initialize(credentials)
 
 import random
@@ -196,30 +196,7 @@ def remote_sensing_data():
             geometry = ee.Geometry.Point([longitude, latitude])
             print("Geometry:", geometry.getInfo())
 
-            # # # Define a broader time range for image selection
-            # end_date = datetime.now()
-
-            # # # Set start date to 1 month back
-            # start_date = end_date - timedelta(days=30)
-
-            # # # Format the dates as strings
-            # start_date_str = start_date.strftime('%Y-%m-%d')
-            # end_date_str = end_date.strftime('%Y-%m-%d')
-            # # Define a specific past date for your analysis
-            # # specific_date = datetime(2025, 3, 30)  # Example: March 15, 2024
-            
-            # # Set start date to 1 month before the specific date
-            # # start_date = specific_date - timedelta(days=30)
-
-            # # Format the dates as strings
-            # # start_date_str = start_date.strftime('%Y-%m-%d')
-            # # end_date_str = specific_date.strftime('%Y-%m-%d')
-
-            # print(f"Fetching data from {start_date_str} to {end_date_str}")
-            # # # Define a broader time range for image selection
-
-
-
+            # # Define a broader time range for image selection
             # end_date = datetime.now()
 
             # # Set start date to 1 month back
@@ -229,16 +206,39 @@ def remote_sensing_data():
             # start_date_str = start_date.strftime('%Y-%m-%d')
             # end_date_str = end_date.strftime('%Y-%m-%d')
             # Define a specific past date for your analysis
-            specific_date = datetime(2025, 5, 5)  # Example: March 15, 2024
+            specific_date = datetime(2025, 6, 26)  # Example: March 15, 2024
             
             # Set start date to 1 month before the specific date
             start_date = specific_date - timedelta(days=30)
 
             # Format the dates as strings
-            start_date_str = start_date.strftime('%Y-%m-%d')
-            end_date_str = specific_date.strftime('%Y-%m-%d')
+            # start_date_str = start_date.strftime('%Y-%m-%d')
+            # end_date_str = specific_date.strftime('%Y-%m-%d')
 
-            print(f"Fetching data from {start_date_str} to {end_date_str}")
+            # print(f"Fetching data from {start_date_str} to {end_date_str}")
+            # # Define a broader time range for image selection
+
+
+
+            # # end_date = datetime.now()
+
+            # # # Set start date to 1 month back
+            # # start_date = end_date - timedelta(days=30)
+
+            # # # Format the dates as strings
+            # # start_date_str = start_date.strftime('%Y-%m-%d')
+            # # end_date_str = end_date.strftime('%Y-%m-%d')
+            # # Define a specific past date for your analysis
+            # specific_date = datetime(2025, 5, 5)  # Example: March 15, 2024
+            
+            # # Set start date to 1 month before the specific date
+            # start_date = specific_date - timedelta(days=30)
+
+            # # Format the dates as strings
+            # start_date_str = start_date.strftime('%Y-%m-%d')
+            # end_date_str = specific_date.strftime('%Y-%m-%d')
+
+            # print(f"Fetching data from {start_date_str} to {end_date_str}")
 
             # Filter the image collection
             image_collection = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") \

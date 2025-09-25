@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "earth-engine-cloud-471609",
+  "private_key_id": "d2c7ef4caa5952bc7f4ce8bdc6220444adad8b9d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCw6QXVW1fT71/u\nhz6eHPyhrcGV/+YqFDWBueaHlv6KlPjOvDq7oIimnca22fQsKXPv6zPnAkEOTipv\n7Menpe6qSks0zFMxyGYKWZdju5mCyFaJyOpTY6FH6X/QJfjUdyajKlreAwIEyjJY\ny2aiwfxoYWQPVfg1QMGck4oip08xrESfmN551LX/F72XwT2YyJTU9GIOUUAdxc7H\nVRIxR1amIyOf2QaFqRCwf96km0HuOqQSndXyxZFY1QJ40mjZLJ4c6lui19nMwGdf\n/2gM4tC0we/JVNVljL17a+r/+6OtjZwkaXuCIA3GzLSq/U5nyPpmwYBEclg4VArR\nylKQbE1dAgMBAAECggEAFgLIIQWeZdYQn4LgPZfprswJm/oczvt4tM1Ga3RT8zYZ\nxs8Ql6uflOtof/OaN6xoql8fNAzJv1fmW8qgBLHWggWAWe9aIoWGfJ8tANGkhesb\nKUWAMiPhOytIJcOzs+unOQHaEGlbZPErVnToLjPojawgYPAXU7jc3fhVZX5fkhRh\nry6tMWn0mRF+Un7Z8UbfhasJWFHVQtv9e9XoPaebhbD7Zod5aq6KK8SL1CVo5zjj\nfkYWJhfp+aKj3qpfvjD4eGQwTIjX5k6dAHxnlqVx4/H50e3JlI2dYb4OoOCwH7Uq\nXMUpyGIt/5ho6P26XmnLpvkZ6D6d6wbk5m2+SrNJmQKBgQDsI6/lR529+38cpxHh\nL5IqiNazIQzPTXLy206vsEmHN6BWF2q4Dmw+fqL2zIQs0TjUh+BdjpfZT9iARPfD\nDmUdI0wjXQGuSk55Cq1Ga0rZhQG6l5ThlZlK7xSL9iEbMYFsBojiG62DFzRrnlXr\ndGWt4RuwvEaxw4V+44p72+bBzwKBgQC/yhLn/Q6oDHJobapjAAL2zqQ2k4BrZFig\nBkpyt8AMrNjK6TpBFhnRzvGzxLYpoE9l9A3kgyH5imE9yCjPV5kEeuJzxrYR6tnP\nN5OOur2PiYvo9/6CBhoxE7ykVKjVdEinW/4oE4BYBTq14rBy1R4JwDVS6WrwT1uT\n/Tx89mclEwKBgQC40d2z2G+v6I2+gUzPMQp33A4euXlrLzUOu3NEsvd5q6IEf+N5\nF2DFMRyficbRxRdz0L1cvGRBI+tRyakZs8SUH7JR41OTdHki56Zi/UriIOYPguB2\nBz6plaJBQWz7+a1QPXUZc4xEk/7lVFHvLXT/uLaRh2rVazCq9bDH7H8ZpQKBgGYq\nH94iqI8OaleEq7InDG0q8MD92/fZMXi1QS1RAuX9oVKd4OFRA5oHMiwACsWr1v/J\nfSkQTaXfeCNwH4Ur9aA0UbM41D5BK5u90EXE5juzGquUh6f91i/0gpXLX1CtrBIy\n5/WzRbgduQOw6SuSqXiqQf2Tx9qRe4ge6vzqSVGvAoGAeiKqkOHOD/nPZLJudPAb\nRM+8IZPH6bWgNqSPGwjbKizah9b6WNSnK1lzCqy8VFwsH0vilchrGmK2I6oImTVF\n9w3iVcyQb3SUC+EOqi98sJqCVh33JH+CrBKyWXkmy7f8YALR1SS7NDTG09fmUvdY\n2deiTj9eNV9WiBOQJEb1j58=\n-----END PRIVATE KEY-----\n",
+  "client_email": "bariflolabs@earth-engine-cloud-471609.iam.gserviceaccount.com",
+  "client_id": "110803772143646999473",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bariflolabs%40earth-engine-cloud-471609.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
