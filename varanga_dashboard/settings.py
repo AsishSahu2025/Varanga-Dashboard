@@ -145,6 +145,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# ADDED: Fix for collectstatic error
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 
