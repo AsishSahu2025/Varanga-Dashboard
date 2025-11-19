@@ -108,6 +108,20 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'varangadb',
+#         'USER': 'Vertoxlabs',
+#         'PASSWORD': 'Vtx@mru@#5951#new',
+#         'HOST': 'bcpostgressqlserver12.postgres.database.azure.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         }
+#     }
+# }
+
 
 
 # Password validation
