@@ -98,13 +98,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'varangadb',
-        'USER': 'vertoxl',
-        'PASSWORD': 'vertoxlabs',
-        'HOST': '192.168.1.140',
+        'USER': 'asish',
+        'PASSWORD': '1234567890',
+        'HOST': 'localhost',
         'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        }
+        # 'OPTIONS': {
+        #     'sslmode': 'require',
+        # }
     }
 }
 
@@ -180,3 +180,14 @@ SIMPLE_JWT = {
 CSRF_TRUSTED_ORIGINS = [
     'https://varangabg.bc-pl.com'
 ]
+
+
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST_USER = "bariflolabs@gmail.com"
+# EMAIL_HOST_PASSWORD = "pdpiaqlzeylxwlww"
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

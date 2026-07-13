@@ -181,7 +181,7 @@ from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/earthengine.readonly']
 
 credentials = service_account.Credentials.from_service_account_file(
-    'earth-engine-cloud-471609-d2c7ef4caa59.json', scopes=SCOPES)  
+    'fit-sanctum-502304-e4-4d8cd14377ff.json', scopes=SCOPES)  
 ee.Initialize(credentials)
 
 import random
@@ -206,10 +206,10 @@ def remote_sensing_data():
             # start_date_str = start_date.strftime('%Y-%m-%d')
             # end_date_str = end_date.strftime('%Y-%m-%d')
             # Define a specific past date for your analysis
-            specific_date = datetime(2025, 6, 26)  # Example: March 15, 2024
+            # specific_date = datetime(2025, 6, 26)  # Example: March 15, 2024
             
             # Set start date to 1 month before the specific date
-            start_date = specific_date - timedelta(days=30)
+            # start_date = specific_date - timedelta(days=30)
 
             # Format the dates as strings
             # start_date_str = start_date.strftime('%Y-%m-%d')
@@ -242,9 +242,10 @@ def remote_sensing_data():
 
             # Filter the image collection
             image_collection = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") \
-                .filterBounds(geometry) \
-                .filter(ee.Filter.lte('CLOUDY_PIXEL_PERCENTAGE', 40)) \
-                .filterDate(start_date, specific_date)
+                .filterBounds(geometry)
+                # .filter(ee.Filter.lte('CLOUDY_PIXEL_PERCENTAGE', 40)) \
+                # .filterDate(start_date, specific_date)
+            print(image_collection.size().getInfo())
 
             # Get the count of available images
             image_count = image_collection.size().getInfo()
@@ -341,26 +342,26 @@ def remote_sensing_data():
                 AQUATIC_MACROPYTES=data.get('AQUATIC_MACROPYTES'),
                 Phycocyanin=data.get('Phycocyanin'),
                 Chl_a=data.get('Chl-a'),  # Storing the Chlorophyll-a data
-                created_at=specific_date
+                # created_at=specific_date
             )
-            user_email = pond.user.Email
-            email_subject = 'Remote Sensing Data Saved....'
-            email_message = f"""
-            Dear User,
-                The remote sensing data saved for pond '{pond.latlong}'.
+            # user_email = pond.user.Email
+            # email_subject = 'Remote Sensing Data Saved....'
+            # email_message = f"""
+            # Dear User,
+            #     The remote sensing data saved for pond '{pond.latlong}'.
 
-                Regards,
-                Bariflolabs
-                """
-            send_mail(
-                email_subject,
-                email_message,
-                settings.EMAIL_HOST_USER, 
-                [user_email], 
-                fail_silently=False,
-            )
+            #     Regards,
+            #     Bariflolabs
+            #     """
+            # send_mail(
+            #     email_subject,
+            #     email_message,
+            #     settings.EMAIL_HOST_USER, 
+            #     [user_email], 
+            #     fail_silently=False,
+            # )
             
-            print("Email sent to", user_email)
+            # print("Email sent to", user_email)
 
         return JsonResponse({'message': 'Data saved successfully'})
     except Exception as e:

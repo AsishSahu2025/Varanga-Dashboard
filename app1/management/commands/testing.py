@@ -55,20 +55,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         while True:
             try:
-                ponds = Pond.objects.all()
-                for pond in ponds:
-                    user_email = pond.user.Email
-                    try:
-                        send_mail(
-                            'Remote Sensing Data Processing Started',
-                            f"Dear User,\n\nThe remote sensing data processing for pond '{pond.latlong}' has started.\n\nRegards,\nBariflolabs",
-                            settings.EMAIL_HOST_USER, 
-                            [user_email], 
-                            fail_silently=False,
-                        )
-                        print("Email sent to", user_email)
-                    except Exception as email_err:
-                        print(f"Email failed to {user_email}: {email_err}")
+                # ponds = Pond.objects.all()
+                # for pond in ponds:
+                #     user_email = pond.user.Email
+                #     try:
+                #         send_mail(
+                #             'Remote Sensing Data Processing Started',
+                #             f"Dear User,\n\nThe remote sensing data processing for pond '{pond.latlong}' has started.\n\nRegards,\nBariflolabs",
+                #             settings.EMAIL_HOST_USER, 
+                #             [user_email], 
+                #             fail_silently=False,
+                #         )
+                #         print("Email sent to", user_email)
+                #     except Exception as email_err:
+                #         print(f"Email failed to {user_email}: {email_err}")
 
                 remote_sensing_data()
                 self.stdout.write(self.style.SUCCESS("Remote sensing data processed."))
