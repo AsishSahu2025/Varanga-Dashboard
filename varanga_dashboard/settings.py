@@ -98,9 +98,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'varangadb',
-        'USER': 'asish',
-        'PASSWORD': '1234567890',
-        'HOST': 'localhost',
+        'USER': 'bariflo',
+        'PASSWORD': 'Bariflo@2401',
+        'HOST': '122.176.31.88',
         'PORT': '5432',
         # 'OPTIONS': {
         #     'sslmode': 'require',
