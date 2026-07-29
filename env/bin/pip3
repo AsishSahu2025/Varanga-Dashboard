@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/kanhucharan/Desktop/Bariflo Projects/Bariflo_Projects2025/Bariflo_Projects/Varanga-Dashboard/env/bin/python3" "$0" "$@"
-' '''
+#!/home/pradip/Desktop/Jagatpur/Varanga-Dashboard/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
