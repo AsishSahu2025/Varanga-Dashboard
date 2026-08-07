@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_9z@p5nbgtue$iflb98tcz=-a60q4pxwcbgub6dcoe7)lh6@kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.188.217.108','*','127.0.0.1']
+ALLOWED_HOSTS = ['*', 'varanga.bc-pl.com']
 
 
 # Application definition
@@ -100,7 +100,7 @@ DATABASES = {
         'NAME': 'varangadb',
         'USER': 'bariflo',
         'PASSWORD': 'Bariflo@2401',
-        'HOST': '122.176.31.88',
+        'HOST': '192.168.1.199',
         'PORT': '5432',
         # 'OPTIONS': {
         #     'sslmode': 'require',
@@ -163,7 +163,9 @@ STATIC_URL = 'static/'
 # ADDED: Fix for collectstatic error
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://varanga.bc-pl.com"  # frontend
+]
 
 
 # Default primary key field type
@@ -174,14 +176,6 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'Mob',
     'USER_ID_CLAIM': 'user_id',
 }
-
-
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://varangabg.bc-pl.com'
-]
-
-
 
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST = "smtp.gmail.com"

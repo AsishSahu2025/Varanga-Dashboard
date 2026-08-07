@@ -183,7 +183,7 @@ from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/earthengine.readonly']
 
 credentials = service_account.Credentials.from_service_account_file(
-    'fit-sanctum-502304-e4-4d8cd14377ff.json', scopes=SCOPES)  
+    'earth-engine-486705-90d2d5209baa.json', scopes=SCOPES)  
 ee.Initialize(credentials)
 
 import random
