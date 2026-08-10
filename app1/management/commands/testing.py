@@ -77,5 +77,6 @@ class Command(BaseCommand):
                 traceback.print_exc()
                 self.stdout.write(self.style.ERROR(f"An error occurred: {e}"))
 
-            sleep(60)  # 1 minute for testing
+            # sleep(60)  # 1 minute for testing
             # sleep(5 * 24 * 60 * 60)  # 5 days in production
+            sleep(24*60*60)

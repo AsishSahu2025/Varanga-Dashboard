@@ -45,6 +45,30 @@ class Parameter(models.Model):
     Chl_a = models.FloatField(null=True, blank=True)  
     pond = models.ForeignKey(Pond, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
+    # Sentinel-2 image information
+    image_id = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+
+    image_date = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    satellite_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True
+    )
+
+    cloud_percentage = models.FloatField(
+        null=True,
+        blank=True
+    )
+
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.pond)

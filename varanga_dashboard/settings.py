@@ -167,6 +167,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://varanga.bc-pl.com"  # frontend
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    # "https://autofeeder.bc-pl.com",
+    "http://localhost:5173",
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

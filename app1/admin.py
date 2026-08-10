@@ -21,7 +21,7 @@ class PondAdmin(admin.ModelAdmin):
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
     list_display = (
-        'pond', 'pH', 'dissolved_oxygen', 'NDVI', 'NDTI',
+        'pond', 'image_id','image_date','satellite_name','pH', 'dissolved_oxygen', 'NDVI', 'NDTI',
         'GCI', 'NDCI', 'NDWI', 'TSS', 'CDOM',
         'AQUATIC_MACROPYTES', 'Phycocyanin', 'Chl_a', 'created_at'
     )
