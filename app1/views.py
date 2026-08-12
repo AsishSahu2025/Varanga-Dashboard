@@ -13,8 +13,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import MyUser
-from django.db.models import (Case,When,Value,IntegerField,F,Window)
+from django.db.models import (Avg,Case,When,Value,IntegerField,F,Window)
 from django.db.models.functions import (ExtractDay,RowNumber)
+from datetime import datetime
+from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
+from .models import Parameter
 
 
 class SignupView(APIView):
@@ -401,73 +406,6 @@ class ParameterListView(APIView):
     
 
 
-
-
-# views.py
-from rest_framework.decorators import api_view
-from rest_framework.parsers import JSONParser
-from django.http import JsonResponse
-from app1.models import Parameter
-
-# @api_view(['POST'])
-# def graph(request, id):
-#     try:
-#         jsondata = JSONParser().parse(request)
-#         month = jsondata.get('month')
-
-#         if not month:
-#             return JsonResponse({'message': 'Month is required'}, status=400)
-
-#         temp = Parameter.objects.filter(
-#             pond=id,
-#             created_at__month=month
-#         ).order_by('-created_at')[:5]
-
-#         if temp.exists():
-#             ph_values = [param.pH for param in temp]
-#             DO_values = [param.dissolved_oxygen for param in temp]
-#             ndvi_values = [param.NDVI for param in temp]
-#             ndti_values = [param.NDTI for param in temp]
-#             gci_values = [param.GCI for param in temp]
-#             ndci_values = [param.NDCI for param in temp]
-#             ndwi_values = [param.NDWI for param in temp]
-#             TSS_values = [param.TSS for param in temp]
-#             cdom_values = [param.CDOM for param in temp]
-#             AQUATIC_MACROPYTES_values = [param.AQUATIC_MACROPYTES for param in temp]
-#             Chl_a_values = [param.Chl_a for param in temp]
-#             Phycocyanin_values = [param.Phycocyanin for param in temp]
-
-#             weeks = [f"week {(i.created_at.day - 1) // 7 + 1}" for i in temp]
-#             weeks.reverse()
-
-#             response = {
-#                 'ph': ph_values,
-#                 'dissolved_oxygen': DO_values,
-#                 'NDVI': ndvi_values,
-#                 'NDTI': ndti_values,
-#                 'GCI': gci_values,
-#                 'NDCI': ndci_values,
-#                 'NDWI': ndwi_values,
-#                 'TSS': TSS_values,
-#                 'CDOM': cdom_values,
-#                 'AQUATIC_MACROPYTES': AQUATIC_MACROPYTES_values,
-#                 'Chl_a': Chl_a_values,
-#                 'Phycocyanin': Phycocyanin_values,
-#                 'week': weeks
-#             }
-#             return JsonResponse(response, safe=False)
-#         else:
-#             return JsonResponse({'message': 'No data found for the given month and pond'}, status=404)
-
-#     except Exception as e:
-#         return JsonResponse({'message': 'An error occurred', 'error': str(e)}, status=500)
-
-
-from rest_framework.decorators import api_view
-from rest_framework.parsers import JSONParser
-from django.http import JsonResponse
-from .models import Parameter  # Adjust import as needed
-
 # @api_view(['POST'])
 # def graph(request):
 #     try:
@@ -511,20 +449,18 @@ from .models import Parameter  # Adjust import as needed
 
 
 
-
-from rest_framework.decorators import api_view
-from rest_framework.parsers import JSONParser
-from django.http import JsonResponse
-from .models import Parameter  # Adjust import as needed
-
-# @api_view(['POST'])
+# @api_view(["POST"])
 # def graph(request):
 #     try:
 #         jsondata = JSONParser().parse(request)
-#         month = jsondata.get("month")
 
+#         month = jsondata.get("month")
+#         year = jsondata.get("year")
+
+#         # -----------------------------
 #         # Validate month
-#         if not month:
+#         # -----------------------------
+#         if month is None:
 #             return JsonResponse(
 #                 {"message": "Month is required"},
 #                 status=400
@@ -544,10 +480,34 @@ from .models import Parameter  # Adjust import as needed
 #                 status=400
 #             )
 
+#         # -----------------------------
+#         # Validate year
+#         # -----------------------------
+#         if year is None:
+#             return JsonResponse(
+#                 {"message": "Year is required"},
+#                 status=400
+#             )
+
+#         try:
+#             year = int(year)
+#         except (TypeError, ValueError):
+#             return JsonResponse(
+#                 {"message": "Invalid year"},
+#                 status=400
+#             )
+
+        
+#         # -----------------------------
 #         # Get latest record of each week
+#         # for the selected year + month
+#         # -----------------------------
 #         records = (
 #             Parameter.objects
-#             .filter(created_at__month=month)
+#             .filter(
+#                 created_at__year=year,
+#                 created_at__month=month
+#             )
 #             .annotate(
 #                 day=ExtractDay("created_at")
 #             )
@@ -574,26 +534,33 @@ from .models import Parameter  # Adjust import as needed
 
 #         if not records.exists():
 #             return JsonResponse(
-#                 {"message": "No data found for the given month"},
+#                 {
+#                     "message": "No data found for the given month and year"
+#                 },
 #                 status=404
 #             )
 
+#         # -----------------------------
 #         # Easy lookup by week
+#         # -----------------------------
 #         weekly_map = {
 #             record.week: record
 #             for record in records
 #         }
 
+#         # -----------------------------
+#         # Parameter mapping
+#         # -----------------------------
 #         PARAMETER_FIELDS = {
-#             "ph": "pH",
-#             "dissolved_oxygen": "dissolved_oxygen",
-#             "NDVI": "NDVI",
-#             "NDTI": "NDTI",
-#             "GCI": "GCI",
-#             "NDCI": "NDCI",
-#             "NDWI": "NDWI",
-#             "TSS": "TSS",
-#             "CDOM": "CDOM",
+#             # "ph": "pH",
+#             # "dissolved_oxygen": "dissolved_oxygen",
+#             # "NDVI": "NDVI",
+#             # "NDTI": "NDTI",
+#             # "GCI": "GCI",
+#             # "NDCI": "NDCI",
+#             # "NDWI": "NDWI",
+#             # "TSS": "TSS",
+#             # "CDOM": "CDOM",
 #             "AQUATIC_MACROPYTES": "AQUATIC_MACROPYTES",
 #             "Chl_a": "Chl_a",
 #             "Phycocyanin": "Phycocyanin",
@@ -606,11 +573,19 @@ from .models import Parameter  # Adjust import as needed
 
 #         response["week"] = []
 
+#         # -----------------------------
+#         # Return Week 1 to Week 5
+#         # -----------------------------
 #         for week in range(1, 6):
-#             response["week"].append(f"week {week}")
+
+#             response["week"].append(
+#                 f"week {week}"
+#             )
+
 #             record = weekly_map.get(week)
 
 #             for response_key, model_field in PARAMETER_FIELDS.items():
+
 #                 if record:
 #                     response[response_key].append(
 #                         getattr(record, model_field)
@@ -680,84 +655,100 @@ def graph(request):
                 status=400
             )
 
-        
+        if year < 2000 or year > 2100:
+            return JsonResponse(
+                {"message": "Invalid year"},
+                status=400
+            )
+
         # -----------------------------
-        # Get latest record of each week
-        # for the selected year + month
+        # Create month date range
         # -----------------------------
-        records = (
+        start_date = datetime(year,month,1)
+
+        if month == 12:
+            end_date = datetime(year + 1,1,1)
+        else:
+            end_date = datetime(year,month + 1,1)
+
+        # -----------------------------
+        # Calculate weekly averages
+        # -----------------------------
+        weekly_records = (
             Parameter.objects
             .filter(
-                created_at__year=year,
-                created_at__month=month
+                created_at__gte=start_date,
+                created_at__lt=end_date
             )
             .annotate(
                 day=ExtractDay("created_at")
             )
             .annotate(
                 week=Case(
-                    When(day__lte=7, then=Value(1)),
-                    When(day__lte=14, then=Value(2)),
-                    When(day__lte=21, then=Value(3)),
-                    When(day__lte=28, then=Value(4)),
+                    When(
+                        day__lte=7,
+                        then=Value(1)
+                    ),
+                    When(
+                        day__lte=14,
+                        then=Value(2)
+                    ),
+                    When(
+                        day__lte=21,
+                        then=Value(3)
+                    ),
+                    When(
+                        day__lte=28,
+                        then=Value(4)
+                    ),
                     default=Value(5),
                     output_field=IntegerField(),
                 )
             )
+            .values("week")
             .annotate(
-                row_number=Window(
-                    expression=RowNumber(),
-                    partition_by=[F("week")],
-                    order_by=F("created_at").desc(),
-                )
+                AQUATIC_MACROPYTES=Avg(
+                    "AQUATIC_MACROPYTES"
+                ),
+                Chl_a=Avg(
+                    "Chl_a"
+                ),
+                Phycocyanin=Avg(
+                    "Phycocyanin"
+                ),
             )
-            .filter(row_number=1)
             .order_by("week")
         )
 
-        if not records.exists():
+        if not weekly_records.exists():
             return JsonResponse(
                 {
-                    "message": "No data found for the given month and year"
+                    "message":
+                    "No data found for the given month and year"
                 },
                 status=404
             )
 
         # -----------------------------
-        # Easy lookup by week
+        # Map week number to result
         # -----------------------------
         weekly_map = {
-            record.week: record
-            for record in records
+            record["week"]: record
+            for record in weekly_records
         }
 
         # -----------------------------
-        # Parameter mapping
+        # Maintain frontend response
         # -----------------------------
-        PARAMETER_FIELDS = {
-            # "ph": "pH",
-            # "dissolved_oxygen": "dissolved_oxygen",
-            # "NDVI": "NDVI",
-            # "NDTI": "NDTI",
-            # "GCI": "GCI",
-            # "NDCI": "NDCI",
-            # "NDWI": "NDWI",
-            # "TSS": "TSS",
-            # "CDOM": "CDOM",
-            "AQUATIC_MACROPYTES": "AQUATIC_MACROPYTES",
-            "Chl_a": "Chl_a",
-            "Phycocyanin": "Phycocyanin",
-        }
-
         response = {
-            key: []
-            for key in PARAMETER_FIELDS
+            "AQUATIC_MACROPYTES": [],
+            "Chl_a": [],
+            "Phycocyanin": [],
+            "week": []
         }
 
-        response["week"] = []
-
         # -----------------------------
-        # Return Week 1 to Week 5
+        # Week 1 to Week 5
         # -----------------------------
         for week in range(1, 6):
 
@@ -767,18 +758,20 @@ def graph(request):
 
             record = weekly_map.get(week)
 
-            for response_key, model_field in PARAMETER_FIELDS.items():
+            if record:
+                response["AQUATIC_MACROPYTES"].append(record["AQUATIC_MACROPYTES"])
+                response["Chl_a"].append(record["Chl_a"])
+                response["Phycocyanin"].append(record["Phycocyanin"])
 
-                if record:
-                    response[response_key].append(
-                        getattr(record, model_field)
-                    )
-                else:
-                    response[response_key].append(None)
+            else:
+                response["AQUATIC_MACROPYTES"].append(None)
+                response["Chl_a"].append(None)
+                response["Phycocyanin"].append(None)
 
         return JsonResponse(response)
 
     except Exception as e:
+
         return JsonResponse(
             {
                 "message": "An error occurred",
