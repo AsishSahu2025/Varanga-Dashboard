@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_9z@p5nbgtue$iflb98tcz=-a60q4pxwcbgub6dcoe7)lh6@kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'varanga.bc-pl.com']
+ALLOWED_HOSTS = ['*', 'varanga.bc-pl.com', 'varangabg.bc-pl.com']
 
 
 # Application definition
@@ -163,13 +163,17 @@ STATIC_URL = 'static/'
 # ADDED: Fix for collectstatic error
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+CORS_ALLOW_CREDENTIALS = True
+
 CSRF_TRUSTED_ORIGINS = [
-    "https://varanga.bc-pl.com"  # frontend
+    "https://varanga.bc-pl.com",
+    "https://varangabg.bc-pl.com",
 ]
 
+
 CORS_ALLOWED_ORIGINS = [
-    # "https://autofeeder.bc-pl.com",
-    "http://localhost:5173",
+    "https://varanga.bc-pl.com",
+    "https://varangabg.bc-pl.com",
 ]
 
 
