@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_9z@p5nbgtue$iflb98tcz=-a60q4pxwcbgub6dcoe7)lh6@kh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'varanga.bc-pl.com']
+ALLOWED_HOSTS = ['varangabg.bc-pl.com','https://varangabg.bc-pl.com',"*"]
 
 
 # Application definition
@@ -108,19 +108,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'varangadb',
-#         'USER': 'Vertoxlabs',
-#         'PASSWORD': 'Vtx@mru@#5951#new',
-#         'HOST': 'bcpostgressqlserver12.postgres.database.azure.com',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'require',
-#         }
-#     }
-# }
 
 
 
@@ -168,8 +155,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    # "https://autofeeder.bc-pl.com",
-    "http://localhost:5173",
+    "https://varanga.bc-pl.com",
+    # "http://localhost:5173",
 ]
 
 
