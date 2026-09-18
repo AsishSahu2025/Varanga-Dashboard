@@ -36,15 +36,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app1/
 
 # Add configuration for Google Earth Engine JSON key
-COPY earth-engine-cloud-471609-d2c7ef4caa59.json /app1/earth-engine-cloud-471609-d2c7ef4caa59.json
-ENV GOOGLE_APPLICATION_CREDENTIALS=/app1/earth-engine-cloud-471609-d2c7ef4caa59.json
+COPY earth-engine-486705-90d2d5209baa.json /app1/earth-engine-486705-90d2d5209baa.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app1/earth-engine-486705-90d2d5209baa.json
 
 # Copy the supervisord script file
 COPY all_commands.sh /app1/all_commands.sh
 RUN chmod +x /app1/all_commands.sh
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 8003
 
 # Run all_commands
 CMD ["/app1/all_commands.sh"]
